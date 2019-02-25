@@ -76,21 +76,6 @@ Return
 	}
 	Return
 
-^!#p:: ; Abrir pasta Projetos
-	keywait, ctrl
-	keywait, Lwin
-	keywait, alt
-	Blockinput, on
-	ifwinexist PROJETOS
-		{
-			winactivate PROJETOS
-		}
-	else
-		{
-			run X:\operacao\clientes
-		}
-	Blockinput, off
-	Return
 
 #y:: ; testes legais
 send %clipboard%
