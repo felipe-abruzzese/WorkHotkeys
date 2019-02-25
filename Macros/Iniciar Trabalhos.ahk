@@ -12,6 +12,19 @@
 SendMode Input  ; Recommended for new scripts due to its superior speed and reliability.
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; - CABEÇALHO - ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+
+ifwinexist ahk_exe acad.exe
+	{
+		run, C:\Users\felipe.ramalho\Documents\Macros\AUTOCAD.ahk
+	}
+
+
+;AUTORELOAD
+	sleep, 20000
+	reload
+	
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; - INICIO - ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ^#!i:: ; Iniciar Trabalhos
 
@@ -82,25 +95,6 @@ send %clipboard%
 return
 
 
-^#n:: ; Enumerar automaticamente
-
-keywait, ctrl
-keywait, Lwin
-Blockinput, on
-InputBox, Inicio, Valor Inicial, Digite o Valor Inicial, 
-InputBox, Fim, Valor Final, Digite o valor mais alto.
-
-while Inicio <= Fim {
-
-send, {Tab 2}
-send, %Inicio%
-++Inicio
-send, {Tab 2}
-send, r
-}
-Blockinput, off
-return
-
 
 ^#s:: ;ABRIR WINDOWS SPY
 keywait, ctrl
@@ -121,7 +115,7 @@ Run C:\Users\felipe.ramalho\AppData\Local\Apps\Evernote\Evernote\Evernote.exe
 return
 
 ^#r:: ; REINICIA A MACRO INICIAR TRABALHOS
-Run C:\Users\felipe.ramalho\Documents\Macros\Iniciar Trabalhos.ahk
+	reload
 Return
 
 
@@ -320,3 +314,5 @@ return
 ;*******************************************************************************************************TEMPORÁRIO**********************************************************************************************************
 
 
+
+	
