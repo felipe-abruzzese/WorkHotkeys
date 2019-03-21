@@ -72,3 +72,55 @@ Return
 		}
 		Blockinput, off
 		return
+		
+;*************************************************************************************** Auto Preenchimento Autocad *****************************************************************************************************
+
+; Macro auto preenchimento
+
+^#!k::
+#Ifwinexist ahk_exe acad.exe
+WinActivate ahk_exe acad.exe
+winwaitactive, ahk_exe acad.exe
+sendraw, find
+send, {enter}
+sleep, 2000
+sendraw, yy
+send, {tab 3}
+send, {f}
+sleep, 1000
+send, {enter}
+sleep, 1000
+send, {tab 2}
+WinActivate, ahk_exe notepad.exe
+winwaitactive, ahk_exe notepad.exe
+send ^{home}
+loop, 5
+{
+send, +{end}
+send, ^{c}
+WinActivate ahk_exe acad.exe
+winwaitactive, ahk_exe acad.exe
+send, ^{v}
+send, {tab 2}
+send, {r}
+send, {tab 2}
+WinActivate, ahk_exe notepad.exe
+winwaitactive, ahk_exe notepad.exe
+send {down}
+}
+return
+
+^\:: ; envia M2P
+#IfWinActive ahk_exe acad.exe
+	keywait, ctrl
+	keywait, \
+	blockinput, on
+	sendraw, m2p
+	send, {enter}
+	blockinput, off
+	return
+
+:*:hh::
+FormatTime, CurrentDateTime,, dd/MM/yyyy
+SendInput %CurrentDateTime%
+return
