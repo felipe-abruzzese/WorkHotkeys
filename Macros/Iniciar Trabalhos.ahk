@@ -14,10 +14,11 @@ SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; - CABEÇALHO - ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
-ifwinexist ahk_exe acad.exe
-	{
-		run, C:\Users\felipe.ramalho\Documents\Macros\AUTOCAD.ahk
-	}
+
+
+
+run, C:\Users\felipe.ramalho\Documents\Macros\AUTOCAD.ahk
+
 
 
 ;AUTORELOAD
@@ -33,6 +34,7 @@ ifwinexist ahk_exe acad.exe
 	run https://todoist.com/
 	run https://www.kemp-gti.com.br/index.asp
 	run C:\Users\felipe.ramalho\Desktop\q-dir.exe
+	run C:\Users\felipe.ramalho\Desktop\2019 - BANCO DE HORAS FELIPE.xlsx
 Return
 
 ^+v:: ; COLAR COMO TEXTO NÃO FORMATADO
@@ -90,10 +92,56 @@ Return
 	Return
 
 
-#y:: ; testes legais
-	send %clipboard%
-return
+;^y:: ; testes legais
+;	send, ^{c}
+;	FileAppend, %clipboard%, C:\Users\felipe.ramalho\Documents\Macros\Test.txt
 
+;return
+
+
+
+^q:: ; testes legais
+	keywait, ctrl
+	keywait, q
+	Blockinput, on
+	sendraw, R6.
+	blockinput, off
+	return
+	
+	/*
+	mousemove, 1484, 532
+	Loop, 30{
+	click, WD
+	}
+	inputbox, numero, Tipo de Ponto, Digite o tipo de ponto (1 2 ou 3)
+	inputbox, sufixo, Sufixo, Digite o Sufixo
+	if (numero == 1){
+	click, 1505, 517
+	
+	send, {end}
+	send, +{home}
+	send, R2.
+	send, %sufixo%
+
+	}if (numero == 2){
+	click, 1508, 534 
+	send, {end}
+	send, +{home}
+	send, R2.
+	send, %sufixo%
+	
+	}if (numero == 3){
+	click, 1477, 409
+	send, {end}
+	send, +{home}
+	send, R2.
+	send, %sufixo%
+	
+	}
+
+	blockinput, off
+return
+*/
 
 
 ^#s:: ;ABRIR WINDOWS SPY
@@ -137,7 +185,6 @@ blockinput, off
 Return
 }
 
-
 ;******************************************************************************************* COMANDOS EXCEL *************************************************************************************************************
 
 #IfWinActive ahk_class XLMAIN
@@ -151,6 +198,163 @@ Send {esc}
 }
 Return
 
+;**************************************************************** COMANDOS APONTAMENTO ATIVIDADES *************************************************************************************************************
 
+#IfWinActive ahk_class XLMAIN
+^#+k:: ; PREENCHIMENTO AUTOMÁTICO DE GTI
+;setkeydelay, 500
+;setwindelay, 500
+;setcontroldelay, 500
 
+t = 250
+tlong = 1500
+
+keywait, ctrl
+keywait, Lwin
+keywait, Lshift
+keywait, k
+
+blockinput, on
 	
+	Send {f2}
+	Send {end}
+	Send +{home}
+	Send ^{c}
+	Send {esc}
+	sleep, %t%
+	winactivate ahk_exe chrome.exe
+	winwaitactive ahk_exe chrome.exe
+		sendinput ^{v}
+		sleep, %t%
+		sendinput {tab}
+		sleep, %t%
+	winactivate ahk_class XLMAIN
+	winwaitactive ahk_class XLMAIN
+		sendinput {right 2}
+		sendinput {up}
+		sendinput ^{c}
+		sleep, %t%
+	winactivate ahk_exe chrome.exe
+	winwaitactive ahk_exe chrome.exe		
+		sendinput +{end}
+		sendinput ^{v}
+		sendinput {tab}
+		sleep, %t%
+	winactivate ahk_class XLMAIN
+	winwaitactive ahk_class XLMAIN
+		sendinput {right 4}
+		sendinput ^{c}
+		sleep, %t%
+	winactivate ahk_exe chrome.exe
+	winwaitactive ahk_exe chrome.exe		
+		sendinput +{end}
+		sendinput ^{v}
+		sendinput {tab}
+		sleep, %t%
+	winactivate ahk_class XLMAIN
+	winwaitactive ahk_class XLMAIN
+		sendinput {left 4}
+		sendinput {down}
+		sendinput ^{c}
+		sleep, %t%
+	winactivate ahk_exe chrome.exe
+	winwaitactive ahk_exe chrome.exe		
+		sendinput +{end}
+		sendinput ^{v}
+		sendinput {tab 2}
+		sleep, %t%
+	winactivate ahk_class XLMAIN
+	winwaitactive ahk_class XLMAIN
+		sendinput {left}
+		sendinput ^{down}
+		sendinput {left}
+		Send {f2}
+		Send {end}
+		Send +{home}
+		Send ^{c}
+		Send {esc}
+		sleep, %t%
+	
+	send {tab}
+	send ^{up}
+	send {left}
+	send {down 3}
+	loop, %clipboard% {
+				
+			sendinput {right}
+			sendinput ^{c}
+			sendinput {right}
+			sleep, %t%
+		winactivate ahk_exe chrome.exe
+		winwaitactive ahk_exe chrome.exe		
+			sendinput %clipboard%
+			sendinput {tab}
+			sleep, %t%
+		winactivate ahk_class XLMAIN
+		winwaitactive ahk_class XLMAIN
+			Send {f2}
+			Send {end}
+			Send +{home}
+			Send ^{c}
+			Send {esc}
+			sendinput {right}
+			sleep, %t%
+		winactivate ahk_exe chrome.exe
+		winwaitactive ahk_exe chrome.exe		
+			sleep, %t% ;%t%*4
+			sendinput %clipboard% ;UNIORG
+			sleep, %tlong% ;%t%*4
+			sendinput {enter}
+			sendinput {tab}
+			sleep, %t%
+			
+			loop, 3 {
+			winactivate ahk_class XLMAIN
+			winwaitactive ahk_class XLMAIN
+				Send ^{c}
+				sendinput {right}
+				sleep, %t%
+			winactivate ahk_exe chrome.exe
+			winwaitactive ahk_exe chrome.exe		
+				sendinput %clipboard%
+				sendinput {tab}
+				sleep, %t%
+				}
+		winactivate ahk_class XLMAIN
+		winwaitactive ahk_class XLMAIN
+			Send {f2}
+			Send {end}
+			Send +{home}
+			Send ^{c}
+			Send {esc}
+			sendinput {right}
+			sleep, %t%	
+		winactivate ahk_exe chrome.exe
+		winwaitactive ahk_exe chrome.exe		
+			sendinput +{end}
+			sendinput %clipboard%
+			sendinput {tab}
+			sleep, %t%
+		winactivate ahk_class XLMAIN
+		winwaitactive ahk_class XLMAIN
+			Send ^{c}
+			sleep, %t%
+		winactivate ahk_exe chrome.exe
+		winwaitactive ahk_exe chrome.exe		
+			sendinput %clipboard%
+			sendinput {tab}
+			sleep, %t%
+		winactivate ahk_class XLMAIN
+		winwaitactive ahk_class XLMAIN	
+			sendinput {down}
+			sendinput ^{left}
+			sleep, %t%
+			}
+	sendinput {down}
+	sendinput ^{left}
+	sendinput {down}
+blockinput, off
+return
+	
+
+

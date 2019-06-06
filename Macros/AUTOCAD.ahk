@@ -13,7 +13,7 @@ SendMode Input  ; Recommended for new scripts due to its superior speed and reli
 SetWorkingDir %A_ScriptDir%  ; Ensures a consistent starting directory.
 #SingleInstance force
 
-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; - CABEÃ‡ALHO - ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; - CABEÇALHO - ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 
 IfWinNotExist ahk_exe acad.exe
@@ -30,17 +30,23 @@ IfWinActive ahk_exe acad.exe
 keywait, ctrl
 keywait, alt
 Blockinput, on
+loop, 9 {
 Sendraw, Layout
+send, {enter}
+;sleep, 1500
 Send, {d}
-winactivate ahk_exe notepad.exe
-winwaitactive ahk_exe notepad.exe
-Send, ^{home}
-send, +{end}
-send, ^{c}
-send, {del 2}
-winactivate ahk_exe acad.exe
-winwaitactive ahk_exe acad.exe
-send, {clipboard}
+send, {enter 2}
+sleep, 1500
+}
+;winactivate ahk_exe notepad.exe
+;winwaitactive ahk_exe notepad.exe
+;Send, ^{home}
+;send, +{end}
+;send, ^{c}
+;send, {del 2}
+;winactivate ahk_exe acad.exe
+;winwaitactive ahk_exe acad.exe
+;send, {clipboard}
 blockinput, off
 }
 Return
@@ -73,7 +79,7 @@ Return
 		Blockinput, off
 		return
 		
-;*************************************************************************************** Auto Preenchimento Autocad *****************************************************************************************************
+;***************************************************************************** Auto Preenchimento Autocad *****************************************************************************************************
 
 ; Macro auto preenchimento
 
@@ -121,6 +127,12 @@ return
 	return
 
 :*:hh::
+FormatTime, CurrentDateTime,, dd/MM/yyyy
+SendInput %CurrentDateTime%
+return
+
+
+:*:HH::
 FormatTime, CurrentDateTime,, dd/MM/yyyy
 SendInput %CurrentDateTime%
 return
